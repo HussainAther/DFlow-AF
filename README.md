@@ -1,4 +1,4 @@
-# DFlow-AF 
+# DFlow-AF
 
 **Membrane-conditioned structural benchmarking for mixed-chirality peptides.**
 
@@ -41,7 +41,7 @@ DFlow-style membrane update
 
 ## Repository status
 
-**Stage 0 / scaffold.** No biological claim is established by this repository yet.
+**Stage 1 / L-D mirror-control adapter.** No biological claim is established by this repository yet.
 
 - No AlphaFold weights or source code are bundled.
 - AlphaFold confidence values are treated as model diagnostics, **not thermodynamic free energies**.
@@ -73,6 +73,9 @@ python -m dflow_af.cli list-systems
 
 # Generate predictor-agnostic job manifests
 python -m dflow_af.cli make-manifests --out results/manifests
+
+# Generate native AlphaFold 3 JSON for the all-L/all-D mirror controls
+python -m dflow_af.cli make-af3-inputs --out results/af3_inputs
 
 # Run a toy hydrophobic-mismatch sweep
 python -m dflow_af.cli mismatch-sweep --out results/mismatch.csv

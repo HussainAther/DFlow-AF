@@ -4,6 +4,7 @@ import argparse
 import csv
 from pathlib import Path
 
+from .alphafold_adapter import write_alphafold3_inputs
 from .manifests import write_manifests
 from .mismatch import hydrophobic_mismatch
 from .systems import canonical_systems
@@ -19,6 +20,14 @@ def cmd_list_systems(_: argparse.Namespace) -> int:
 def cmd_make_manifests(args: argparse.Namespace) -> int:
     paths = write_manifests(canonical_systems(), args.out)
     print(f"Wrote {len(paths)} manifests to {args.out}")
+    return 0
+
+
+def cmd_make_af3_inputs(args: argparse.Namespace) -> int:
+    allowed = {"ala10_l", "ala10_d"}
+    systems = tuple(s for s in canonical_systems() if s.system_id in allowed)
+    paths = write_alphafold3_inputs(systems, args.out, seeds=tuple(args.seeds))
+    print(f"Wrote {len(paths)} AlphaFold 3 inputs to {args.out}")
     return 0
 
 
@@ -59,6 +68,11 @@ def build_parser() -> argparse.ArgumentParser:
     q = sub.add_parser("make-manifests", help="Write predictor-agnostic job manifests")
     q.add_argument("--out", default="results/manifests")
     q.set_defaults(func=cmd_make_manifests)
+
+    q = sub.add_parser("make-af3-inputs", help="Write Stage-1 AlphaFold 3 inputs for L/D mirror controls")
+    q.add_argument("--out", default="results/af3_inputs")
+    q.add_argument("--seeds", nargs="+", type=int, default=[1, 2, 3, 4, 5])
+    q.set_defaults(func=cmd_make_af3_inputs)
 
     q = sub.add_parser("mismatch-sweep", help="Run a toy mismatch sweep")
     q.add_argument("--out", default="results/mismatch.csv")
