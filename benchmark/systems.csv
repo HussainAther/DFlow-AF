@@ -1,0 +1,6 @@
+system_id,description,sequence_or_assembly,role
+ala10_l,All-L alanine decamer,(L-Ala)10,mirror control
+ala10_d,All-D alanine decamer,(D-Ala)10,mirror control
+ala10_alt,Alternating stereochemistry,(L-Ala-D-Ala)5,heterochiral sequence
+ala10_ll,Two all-L strands,(L-Ala)10 + (L-Ala)10,pleated-sheet control
+ala10_ld,One L and one D strand,(L-Ala)10 + (D-Ala)10,rippled-sheet candidate
